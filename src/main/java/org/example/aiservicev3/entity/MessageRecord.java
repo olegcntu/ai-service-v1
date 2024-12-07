@@ -2,59 +2,40 @@ package org.example.aiservicev3.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 public class MessageRecord {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(length = 1024)
     private String message;
-
+    @Column(length = 2048)
+    private String response;
+    @Column(length = 2048)
+    private String recommendation;
+    @Column(length = 512)
     private String email;
 
     private LocalDateTime timestamp;
 
-    public MessageRecord() {}
+    public MessageRecord() {
+    }
 
-    public MessageRecord(String message, String email, LocalDateTime timestamp) {
+    public MessageRecord(String message, String response, String recommendation, String email, LocalDateTime timestamp) {
         this.message = message;
         this.email = email;
         this.timestamp = timestamp;
+        this.response = response;
+        this.recommendation = recommendation;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
 }
 

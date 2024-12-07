@@ -16,8 +16,8 @@ public class MessageService {
         this.repository = repository;
     }
 
-    public void saveMessage(String email, String message) {
-        MessageRecord record = new MessageRecord(message, email, LocalDateTime.now());
+    public void saveMessage(String message, String response,String recommendation, String email) {
+        MessageRecord record = new MessageRecord(message, response,recommendation, email, LocalDateTime.now());
         repository.save(record);
     }
 
@@ -26,5 +26,11 @@ public class MessageService {
         return records.isEmpty() ? Optional.empty() : Optional.of(records.get(0));
     }
 
+    public List<MessageRecord> findAllMessagesSortedByTime() {
+        return repository.findAllByOrderByTimestampDesc();
+    }
+    public List<MessageRecord> findAllMessagesByEmailSortedByTime(String email) {
+        return repository.findAllByEmailOrderByTimestampDesc(email);
+    }
 }
 

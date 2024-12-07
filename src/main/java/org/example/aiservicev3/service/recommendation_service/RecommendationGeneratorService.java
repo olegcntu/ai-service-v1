@@ -1,6 +1,5 @@
 package org.example.aiservicev3.service.recommendation_service;
 
-import org.example.aiservicev3.data.mongo.MongoUserWithProductsFinder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -9,8 +8,7 @@ import java.util.Objects;
 public class RecommendationGeneratorService {
 
 
-    public String generateQueryToAI(String category, String userEmail) {
-        String dbInfo = MongoUserWithProductsFinder.findUserWithProductsByEmail(userEmail);
+    public String generateQueryToAI(String category, String userEmail, String dbInfo) {
 
         String additionalInfoAboutCategory = "";
         if (!Objects.equals(category, "")) {
@@ -26,7 +24,6 @@ public class RecommendationGeneratorService {
                         " \"user_data\": {\"wishlist and history\": %s}}",
                 additionalInfoField, dbInfo);
 
-        System.out.println(context);
 
         return context;
     }

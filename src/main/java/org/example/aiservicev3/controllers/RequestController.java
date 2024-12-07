@@ -1,38 +1,33 @@
-package org.example.aiservicev3.controllers;//package org.example.aiservicev2.controllers;
+package org.example.aiservicev3.controllers;
 
-
-import org.example.aiservicev3.data.mongo.MongoProductsChecker;
-import org.example.aiservicev3.service.question_service.ChatQuestionService;
-import org.example.aiservicev3.service.recommendation_service.ChatRecommendationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.aiservicev3.service.question_service.ChatRequestHandler;
+import org.example.aiservicev3.service.recommendation_service.ChatRecommendationRequestHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class RequestController {
 
-    @Autowired
-    ChatQuestionService chatQuestionService;
+    private final ChatRecommendationRequestHandler chatRecommendationRequestHandler;
+    private final ChatRequestHandler chatRequestHandler;
 
-    @Autowired
-    ChatRecommendationService chatRecommendationService;
+    public RequestController(ChatRecommendationRequestHandler chatRecommendationRequestHandler, ChatRequestHandler chatRequestHandler) {
+        this.chatRecommendationRequestHandler = chatRecommendationRequestHandler;
+        this.chatRequestHandler = chatRequestHandler;
+    }
 
     @PostMapping("/user-and-question")
-    public ResponseEntity<Map<String, String>> questionRequest(@RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<Map<String, Object>> questionRequest(@RequestBody Map<String, String> requestBody) {
         String userMessage = requestBody.get("message");
         String userEmail = requestBody.get("email");
 
-        Map<String, String> response = new HashMap<>();
-        String result = chatQuestionService.question(userEmail, userMessage);
-        response.put("reply", result);
+        Map<String, Object> response = chatRequestHandler.getResult(userEmail, userMessage);
 
         return ResponseEntity.ok(response);
     }
@@ -42,21 +37,7 @@ public class RequestController {
         String userEmail = requestBody.get("email");
         String category = requestBody.get("category");
 
-        Map<String, Object> response = new HashMap<>();
-        try {
-            String[] recommendations = chatRecommendationService.question(category, userEmail);
-            if (!MongoProductsChecker.areProductsExist(recommendations)) {
-                throw new Exception();
-            }
-            if (recommendations.length == 0) {
-                throw new Exception();
-            }
-            response.put("reply", recommendations);
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.put("error", "Failed to process recommendation request.");
-        }
-
+        Map<String, Object> response = chatRecommendationRequestHandler.getResult(userEmail, category);
         return ResponseEntity.ok(response);
     }
 }
