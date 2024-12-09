@@ -24,7 +24,17 @@ public class ChatRecommendationRequestHandler {
 
         Map<String, Object> response = new HashMap<>();
         try {
+            if (userEmail == null) {
+                response.put("error", "User not specified in request");
+                return response;
+            }
+
             String userWithProducts = userServiceProxy.findUserWithProductsByEmail(userEmail);
+
+            if (userWithProducts == null) {
+                response.put("error", "User with email " + userEmail + " not found in the system");
+                return response;
+            }
 
             String recommendationQueryToAI = recommendationGeneratorService.generateQueryToAI(category, userEmail, userWithProducts);
 

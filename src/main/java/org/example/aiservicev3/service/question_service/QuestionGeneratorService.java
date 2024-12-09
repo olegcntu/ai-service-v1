@@ -29,18 +29,4 @@ public class QuestionGeneratorService {
         return context;
 
     }
-
-
-    public static String readFileToString(String filePath) throws IOException {
-        StringBuilder content = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line);
-            }
-        }
-
-        return content.toString();
-    }
 }
