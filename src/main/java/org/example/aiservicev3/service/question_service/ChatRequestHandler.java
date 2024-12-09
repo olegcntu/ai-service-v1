@@ -1,7 +1,7 @@
 package org.example.aiservicev3.service.question_service;
 
 import org.example.aiservicev3.proxy.ProductServiceProxy;
-import org.example.aiservicev3.data.postgres.MessageService;
+import org.example.aiservicev3.service.MessageService;
 import org.example.aiservicev3.entity.MessageRecord;
 import org.example.aiservicev3.service.question_service.model.ResultObject;
 import org.springframework.stereotype.Service;

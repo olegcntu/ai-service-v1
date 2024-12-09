@@ -1,5 +1,6 @@
-package org.example.aiservicev3.data.postgres;
+package org.example.aiservicev3.service;
 
+import org.example.aiservicev3.repository.MessageRecordRepository;
 import org.example.aiservicev3.entity.MessageRecord;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package org.example.aiservicev3.service.question_service;
 
-import org.example.aiservicev3.data.postgres.MessageService;
+import org.example.aiservicev3.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

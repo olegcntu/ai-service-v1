@@ -19,12 +19,10 @@ public class ChatRecommendationService {
     public String[] question(String recommendationQueryToAI) {
 
         try {
-
             String response = chatClient.prompt()
                     .user(recommendationQueryToAI)
                     .call()
                     .content();
-
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(response, String[].class); // Парсинг строки в массив
         } catch (Exception e) {

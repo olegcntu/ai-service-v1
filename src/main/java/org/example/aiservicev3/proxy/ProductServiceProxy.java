@@ -79,7 +79,6 @@ public class ProductServiceProxy {
 
                 connection.disconnect();
 
-                // Check if the response contains a valid product JSON
                 JSONObject product = new JSONObject(response.toString());
                 return product.has("_id") && product.getString("_id").equals(productId);
             } else {

@@ -1,4 +1,4 @@
-package org.example.aiservicev3.data.postgres;
+package org.example.aiservicev3.repository;
 
 
 import org.example.aiservicev3.entity.MessageRecord;
